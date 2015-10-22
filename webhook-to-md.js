@@ -7,8 +7,9 @@ var simpleGit = require('simple-git');
 var port = process.env.PORT || 9000;
 var statusCode = process.env.STATUS_CODE || 200;
 var remoteRepo = process.env.REMOTE_REPO;
+var localRepo = __dirname + '/localRepo';
 
-simpleGit().clone(remoteRepo, __dirname + '/myRepo')
+simpleGit().clone(remoteRepo, localRepo)
 
 var server = http.createServer(requestListener);
 server.listen(port);
@@ -33,7 +34,8 @@ function requestListener (request, response) {
             var author = process.env.AUTHOR || 'Author Name';
             var content = post['post_content'];
 
-            var filename = date.split(' ')[0] + '-' + title.replace(/\s+/g, '-').toLowerCase() + '.markdown';
+            var filePath = localRepo + '/_posts/';
+            var filename = filePath + date.split(' ')[0] + '-' + title.replace(/\s+/g, '-').toLowerCase() + '.markdown';
             fs.writeFileSync(filename, '---\n');
             fs.appendFileSync(filename, 'title: "' + title + '"\n');
             fs.appendFileSync(filename, 'date: ' + date + '\n');
@@ -42,6 +44,8 @@ function requestListener (request, response) {
             fs.appendFileSync(filename, '---');
             fs.appendFileSync(filename, '\n');
             fs.appendFileSync(filename, content);
+
+            console.log('Created new file: ' + filename)
         });
     }
 
