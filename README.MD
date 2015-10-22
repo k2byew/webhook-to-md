@@ -25,3 +25,4 @@ Helped by:
 Todo:
 - Restrict webhook sender IP
 - Select branch to deploy to
+- Log to Loggly
