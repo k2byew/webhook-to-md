@@ -21,3 +21,7 @@ Helped by:
 - rmdir alternative: https://github.com/isaacs/rimraf
 - rmdir alternative: http://www.geedew.com/remove-a-directory-that-is-not-empty-in-nodejs/
 - http://stackoverflow.com/questions/4482686/check-synchronously-if-file-directory-exists-in-node-js
+
+Todo:
+- Restrict webhook sender IP
+- Select branch to deploy to
