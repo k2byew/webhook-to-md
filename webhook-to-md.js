@@ -51,7 +51,7 @@ function requestListener (request, response) {
 
         request.on('end', function () {
             var post = querystring.parse(body);
-            console.log('Received post: ' + post);
+            console.log('Received post: ' + post.post_title);
 
             var date = post.post_date;
             var title = post.post_title;
@@ -74,7 +74,7 @@ function requestListener (request, response) {
             simpleGit(localRepo).add(filename)
                                 .commit('Add post: ' + title)
                                 .push(remoteRepo);
-            console.log('Git push complete for:' + filename );
+            console.log('Git push complete for: ' + filename );
         });
     }
 
