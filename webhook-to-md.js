@@ -29,8 +29,10 @@ var rmdir = function(dir) {
 fs.lstat(localRepo, function(err, stats) {
     if (!err && stats.isDirectory()) {
         rmdir(localRepo);
+        console.log('Removed local repository: ' + localRepo);
     }
     simpleGit().clone(remoteRepo, localRepo);
+    console.log('Cloned remote repository: ' + remoteRepo);
 });
 
 var server = http.createServer(requestListener);
@@ -49,6 +51,7 @@ function requestListener (request, response) {
 
         request.on('end', function () {
             var post = querystring.parse(body);
+            console.log('Received post: ' + post);
 
             var date = post.post_date;
             var title = post.post_title;
@@ -71,6 +74,7 @@ function requestListener (request, response) {
             simpleGit(localRepo).add(filename)
                                 .commit('Add post: ' + title)
                                 .push(remoteRepo);
+            console.log('Git push complete for:' + filename );
         });
     }
 
