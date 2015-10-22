@@ -1,14 +1,31 @@
 var http = require('http');
 var querystring = require('querystring');
 var fs = require('fs');
+var path = require("path");
 var simpleGit = require('simple-git');
-
 
 var port = process.env.PORT || 9000;
 var statusCode = process.env.STATUS_CODE || 200;
 var remoteRepo = process.env.REMOTE_REPO;
 var localRepo = __dirname + '/localRepo';
 
+var rmdir = function(dir) {
+    var list = fs.readdirSync(dir);
+    for(var i = 0; i < list.length; i++) {
+        var filename = path.join(dir, list[i]);
+        var stat = fs.statSync(filename);
+
+        if(filename == "." || filename == "..") { //pass these files
+        } else if(stat.isDirectory()) { //rmdir recursively
+            rmdir(filename);
+        } else {
+            fs.unlinkSync(filename); //rm filename
+        }
+    }
+    fs.rmdirSync(dir);
+};
+
+rmdir(localRepo);
 simpleGit().clone(remoteRepo, localRepo)
 
 var server = http.createServer(requestListener);
