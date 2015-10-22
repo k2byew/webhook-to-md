@@ -1,7 +1,8 @@
+'use strict';
 var http = require('http');
 var querystring = require('querystring');
 var fs = require('fs');
-var path = require("path");
+var path = require('path');
 var simpleGit = require('simple-git');
 
 var port = process.env.PORT || 9000;
@@ -15,7 +16,7 @@ var rmdir = function(dir) {
         var filename = path.join(dir, list[i]);
         var stat = fs.statSync(filename);
 
-        if(filename == "." || filename == "..") { //pass these files
+        if(filename == '.' || filename == '..') { //pass these files
         } else if(stat.isDirectory()) { //rmdir recursively
             rmdir(filename);
         } else {
@@ -49,11 +50,11 @@ function requestListener (request, response) {
         request.on('end', function () {
             var post = querystring.parse(body);
 
-            var date = post['post_date'];
-            var title = post['post_title'];
-            var type = post['post_type'];
+            var date = post.post_date;
+            var title = post.post_title;
+            var type = post.post_type;
             var author = process.env.AUTHOR || 'Author Name';
-            var content = post['post_content'];
+            var content = post.post_content;
 
             var filePath = localRepo + '/_posts/';
             var filename = filePath + date.split(' ')[0] + '-' + title.replace(/\s+/g, '-').toLowerCase() + '.markdown';
@@ -77,5 +78,5 @@ function requestListener (request, response) {
   response.end();
 }
 
-console.log("Listening to port " + port.toString());
-console.log("Returning status code " + statusCode.toString());
+console.log('Listening to port ' + port.toString());
+console.log('Returning status code ' + statusCode.toString());
