@@ -22,7 +22,8 @@ Helped by:
 - rmdir alternative: http://www.geedew.com/remove-a-directory-that-is-not-empty-in-nodejs/
 - http://stackoverflow.com/questions/4482686/check-synchronously-if-file-directory-exists-in-node-js
 
-Todo:
+Wishlist:
 - Restrict webhook sender IP
 - Select branch to deploy to
 - Log to Loggly
+- New Relic monitoring
