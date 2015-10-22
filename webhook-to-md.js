@@ -5,7 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var simpleGit = require('simple-git');
 
-var port = process.env.PORT;
+var port = process.env.PORT || 9000;
 var statusCode = process.env.STATUS_CODE || 200;
 var remoteRepo = process.env.REMOTE_REPO;
 var localRepo = __dirname + '/localRepo';
