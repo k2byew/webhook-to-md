@@ -25,8 +25,12 @@ var rmdir = function(dir) {
     fs.rmdirSync(dir);
 };
 
-rmdir(localRepo);
-simpleGit().clone(remoteRepo, localRepo)
+fs.lstat(localRepo, function(err, stats) {
+    if (!err && stats.isDirectory()) {
+        rmdir(localRepo);
+    }
+    simpleGit().clone(remoteRepo, localRepo);
+});
 
 var server = http.createServer(requestListener);
 server.listen(port);
