@@ -62,7 +62,10 @@ function requestListener (request, response) {
             fs.appendFileSync(filename, '\n');
             fs.appendFileSync(filename, content);
 
-            console.log('Created new file: ' + filename)
+            console.log('Created new file: ' + filename);
+            simpleGit(localRepo).add(filename)
+                                .commit('Add post: ' + title)
+                                .push(remoteRepo);
         });
     }
 
