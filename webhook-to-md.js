@@ -1,9 +1,14 @@
 var http = require('http');
 var querystring = require('querystring');
 var fs = require('fs');
+var simpleGit = require('simple-git');
+
 
 var port = process.env.PORT || 9000;
 var statusCode = process.env.STATUS_CODE || 200;
+var remoteRepo = process.env.REMOTE_REPO;
+
+simpleGit().clone(remoteRepo, __dirname + '/myRepo')
 
 var server = http.createServer(requestListener);
 server.listen(port);

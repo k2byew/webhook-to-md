@@ -5,5 +5,8 @@
   "main": "webhook-to-md.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "simple-git": "^1.11.0"
   }
 }
