@@ -60,10 +60,13 @@ function requestListener (request, response) {
         var body = '';
 
         request.on('data', function (data) {
+            console.log('Requesting data...')
             body += data;
+            console.log('Saving data...')
 
             if (body.length > 1e6) // For safety, destroy connection if POST data > ~1MB
                 request.connection.destroy();
+                console.log('Connection too large - destroyed')
         });
 
         request.on('end', function () {
