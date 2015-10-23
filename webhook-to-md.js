@@ -65,7 +65,7 @@ function requestListener (request, response) {
         request.on('data', function (data) {
             console.log('Requesting data...');
             body += data;
-            console.log('Saving data...');
+            console.log('Saving data...'); // Heroku app often just stops here...
 
             if (body.length > 1e6) // For safety, destroy connection if POST data > ~1MB
                 console.log('Connection too large, destroying...');
