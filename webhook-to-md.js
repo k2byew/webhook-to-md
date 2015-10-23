@@ -29,10 +29,13 @@ var rmdir = function(dir) {
 fs.lstat(localRepo, function(err, stats) {
     if (!err && stats.isDirectory()) {
         rmdir(localRepo);
-        console.log('Removed local repository: ' + localRepo);
+        console.log('Removing local repository: ' + localRepo);
     }
-    simpleGit().clone(remoteRepo, localRepo);
-    console.log('Cloned remote repository: ' + remoteRepo);
+    simpleGit().outputHandler(function (command, stdout, stderr) {
+                stdout.pipe(process.stdout);
+                stderr.pipe(process.stderr);
+             })
+            .clone(remoteRepo, localRepo);
 });
 
 var server = http.createServer(requestListener);
@@ -61,6 +64,8 @@ function requestListener (request, response) {
 
             var filePath = localRepo + '/_posts/';
             var filename = filePath + date.split(' ')[0] + '-' + title.replace(/\s+/g, '-').toLowerCase() + '.markdown';
+
+            try {
             fs.writeFileSync(filename, '---\n');
             fs.appendFileSync(filename, 'title: "' + title + '"\n');
             fs.appendFileSync(filename, 'date: ' + date + '\n');
@@ -71,10 +76,18 @@ function requestListener (request, response) {
             fs.appendFileSync(filename, content);
 
             console.log('Created new file: ' + filename);
-            simpleGit(localRepo).add(filename)
+
+            simpleGit(localRepo).outputHandler(function (command, stdout, stderr) {
+                                    stdout.pipe(process.stdout);
+                                    stderr.pipe(process.stderr);
+                                 })
+                                .add(filename)
                                 .commit('Add post: ' + title)
                                 .push(remoteRepo);
-            console.log('Git push complete for: ' + filename );
+
+            } catch (err) {
+                console.log(err.toString());
+            }
         });
     }
 
