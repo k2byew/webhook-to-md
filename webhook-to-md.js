@@ -54,8 +54,9 @@ var server = http.createServer(requestListener);
 server.listen(port);
 
 function requestListener (request, response) {
-    console.log('Incoming request from ' + request.headers.host);
+    console.log('Incoming ' + request.method + ' request. Length:' + request.headers.content-length + ', type: ' + request.headers.content-type);
     if (request.method == 'POST') {
+        console.log('POST request received')
         var body = '';
 
         request.on('data', function (data) {
