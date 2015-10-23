@@ -41,6 +41,8 @@ fs.lstat(localRepo, function(err, stats) {
                         fs.appendFileSync(gitConfigFile, '[user]\n');
                         fs.appendFileSync(gitConfigFile, 'name = ' + process.env.GIT_NAME + '\n');
                         fs.appendFileSync(gitConfigFile, 'email = ' + process.env.GIT_EMAIL + '\n');
+                        fs.appendFileSync(gitConfigFile, '[push]\n');
+                        fs.appendFileSync(gitConfigFile, 'default = simple\n');
 
                         console.log('Set git config file: ' + gitConfigFile);
 
