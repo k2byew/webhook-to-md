@@ -34,20 +34,21 @@ fs.lstat(localRepo, function(err, stats) {
     simpleGit().outputHandler(function (command, stdout, stderr) {
                 stdout.pipe(process.stdout);
                 stderr.pipe(process.stderr);
-             })
-            .clone(remoteRepo, localRepo);
+                })
+                .clone(remoteRepo, localRepo)
+                .then(function() {
+                    try {
+                        var gitConfigFile = localRepo + '/.git/config';
+                        fs.appendFileSync(gitConfigFile, '[user]\n');
+                        fs.appendFileSync(gitConfigFile, 'name = ' + process.env.GIT_NAME + '\n');
+                        fs.appendFileSync(gitConfigFile, 'email = ' + process.env.GIT_EMAIL + '\n');
 
-    try {
-        var gitConfigFile = localRepo + '/.git/config';
-        fs.appendFileSync(gitConfigFile, '[user]\n');
-        fs.appendFileSync(gitConfigFile, 'name = ' + process.env.GIT_NAME + '\n');
-        fs.appendFileSync(gitConfigFile, 'email = ' + process.env.GIT_EMAIL + '\n');
+                        console.log('Set git config file: ' + gitConfigFile);
 
-        console.log('Set git config file: ' + gitConfigFile);
-
-        } catch (err) {
-            console.log(err.toString());
-        }
+                    } catch (err) {
+                        console.log(err.toString());
+                    }
+                });
 });
 
 var server = http.createServer(requestListener);
@@ -94,8 +95,8 @@ function requestListener (request, response) {
                                     stderr.pipe(process.stderr);
                                  })
                                 .add(filename)
-                                .commit('Add post: ' + title)
-                                .push(remoteRepo);
+                                .commit('Add post: ' + title);
+                                // .push(remoteRepo);
 
             } catch (err) {
                 console.log(err.toString());
