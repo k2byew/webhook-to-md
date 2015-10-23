@@ -56,17 +56,18 @@ server.listen(port);
 function requestListener (request, response) {
     console.log('Incoming ' + request.method + ' request. Length: ' + request.headers['content-length'] + ', type: ' + request.headers['content-type']);
     if (request.method == 'POST') {
-        console.log('POST request received')
+        console.log('POST request received');
         var body = '';
+        console.log('body variable created');
 
         request.on('data', function (data) {
-            console.log('Requesting data...')
+            console.log('Requesting data...');
             body += data;
-            console.log('Saving data...')
+            console.log('Saving data...');
 
             if (body.length > 1e6) // For safety, destroy connection if POST data > ~1MB
+                console.log('Connection too large, destroying...');
                 request.connection.destroy();
-                console.log('Connection too large - destroyed')
         });
 
         request.on('end', function () {
