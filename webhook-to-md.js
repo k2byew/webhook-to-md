@@ -32,7 +32,6 @@ fs.lstat(localRepo, function(err, stats) {
         console.log('Removing local repository: ' + localRepo);
     }
     simpleGit().outputHandler(function (command, stdout, stderr) {
-                stdout.pipe(process.stdout);
                 stderr.pipe(process.stderr);
                 })
                 .clone(remoteRepo, localRepo)
