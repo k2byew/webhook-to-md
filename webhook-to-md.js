@@ -95,8 +95,8 @@ function requestListener (request, response) {
                                     stderr.pipe(process.stderr);
                                  })
                                 .add(filename)
-                                .commit('Add post: ' + title);
-                                // .push(remoteRepo);
+                                .commit('Add post: ' + title)
+                                .push(remoteRepo);
 
             } catch (err) {
                 console.log(err.toString());
