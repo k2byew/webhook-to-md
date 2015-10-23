@@ -3,9 +3,11 @@ Need something to listen to webhooks sent by Wordpress plugin HookPress. Then cr
 Configuration:
 - REMOTE_REPO: HTTP(S) path to remote repository which contains the Jekyll blog. Authentication via password/tokens can be set in the path. eg. 'https://username:averylongtokengeneratedbygithub@github.com/username/a-jekyll-blog.git'
 - AUTHOR: Sets the author's name in the generated post.md
+- GIT_NAME: Sets name when comitting to Jekyll blog repository
+- GIT_EMAIL: Sets email when comitting to Jekyll blog repository
 
 Optional Configurations:
-- PORT: Where the HTTP server listens
+- PORT: Where the HTTP server listens (Note: Heroku will set its own, and service always exposed on port 80)
 - STATUS_CODE: HTTP status code sent back by the server after receiving the webhook
 
 
@@ -27,3 +29,4 @@ Wishlist:
 - Select branch to deploy to
 - Log to Loggly
 - New Relic monitoring
+- Set Heroku Config Variables in Procfile
